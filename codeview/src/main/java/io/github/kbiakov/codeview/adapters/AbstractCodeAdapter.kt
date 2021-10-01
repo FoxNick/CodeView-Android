@@ -63,7 +63,7 @@ abstract class AbstractCodeAdapter<T> : RecyclerView.Adapter<AbstractCodeAdapter
             if (!options.shortcut || size <= options.maxLines) // limit is not reached, show full
                 lines = this
             else slice(options.maxLines).let { (linesToShow, dropped) ->
-                lines = linesToShow + options.shortcutNote.toUpperCase()
+                lines = linesToShow + options.shortcutNote.uppercase()
                 droppedLines = dropped
             }
         }
@@ -74,6 +74,7 @@ abstract class AbstractCodeAdapter<T> : RecyclerView.Adapter<AbstractCodeAdapter
     /**
      * Update code.
      */
+    @SuppressLint("NotifyDataSetChanged")
     internal fun updateCode(newCode: String) {
         options.code = newCode
         prepareCodeLines()
@@ -83,6 +84,7 @@ abstract class AbstractCodeAdapter<T> : RecyclerView.Adapter<AbstractCodeAdapter
     /**
      * Update code with new Highlighter.
      */
+    @SuppressLint("NotifyDataSetChanged")
     internal fun updateCode(newOptions: Options) {
         options = newOptions
         prepareCodeLines()
@@ -95,6 +97,7 @@ abstract class AbstractCodeAdapter<T> : RecyclerView.Adapter<AbstractCodeAdapter
      * @param num Line number
      * @param entity Footer entity
      */
+    @SuppressLint("NotifyDataSetChanged")
     fun addFooterEntity(num: Int, entity: T) {
         val notes = footerEntities[num] ?: ArrayList()
         footerEntities.put(num, notes + entity)
@@ -247,9 +250,9 @@ abstract class AbstractCodeAdapter<T> : RecyclerView.Adapter<AbstractCodeAdapter
 
             fun get(pos: Int, n: Int) = when (pos) {
                 in LineStartIdx .. n.lineEndIdx() ->
-                    ViewHolderType.Line.viewType
+                    Line.viewType
                 else ->
-                    ViewHolderType.Border.viewType
+                    Border.viewType
             }
         }
     }

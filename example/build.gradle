@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion compileSdk
-    buildToolsVersion buildTools
+    compileSdkVersion 30
+    buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId 'io.github.kbiakov.codeviewexample'
-        minSdkVersion minSdk
-        targetSdkVersion compileSdk
+        minSdkVersion 21
+        targetSdkVersion 30
         versionCode 1
         versionName '1.0'
     }
@@ -28,7 +28,7 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     implementation "androidx.appcompat:appcompat:$androidxLibrary"
-    implementation "androidx.recyclerview:recyclerview:$androidxLibrary"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
 }
 repositories {
     mavenCentral()

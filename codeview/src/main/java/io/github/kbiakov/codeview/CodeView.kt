@@ -23,9 +23,9 @@ import io.github.kbiakov.codeview.highlight.color
  * @author Kirill Biakov
  */
 class CodeView @JvmOverloads constructor(
-        context: Context,
-        attrs: AttributeSet? = null,
-        defStyleAttr: Int = 0
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0
 ) : RelativeLayout(context, attrs, defStyleAttr) {
 
     private val rvContent: RecyclerView
@@ -39,15 +39,15 @@ class CodeView @JvmOverloads constructor(
         inflate(context, R.layout.layout_code_view, this)
         attrs?.let(::checkStartAnimation)
 
-        rvContent = findViewById<RecyclerView>(R.id.rv_content).apply {
+        rvContent = findViewById<RecyclerView>(R.id.rv_code_content).apply {
             layoutManager = LinearLayoutManager(context)
             isNestedScrollingEnabled = true
         }
 
         shadows = mapOf(
-                ShadowPosition.RightBorder to R.id.shadow_right_border,
-                ShadowPosition.NumBottom to R.id.shadow_num_bottom,
-                ShadowPosition.ContentBottom to R.id.shadow_content_bottom
+            ShadowPosition.RightBorder to R.id.shadow_right_border,
+            ShadowPosition.NumBottom to R.id.shadow_num_bottom,
+            ShadowPosition.ContentBottom to R.id.shadow_content_bottom
         ).mapValues {
             findViewById<View>(it.value)
         }
@@ -58,8 +58,8 @@ class CodeView @JvmOverloads constructor(
             alpha = Const.Alpha.Invisible
 
             animate()
-                    .setDuration(Const.DefaultDelay * 5)
-                    .alpha(Const.Alpha.Initial)
+                .setDuration(Const.DefaultDelay * 5)
+                .alpha(Const.Alpha.Initial)
         } else {
             alpha = Const.Alpha.Initial
         }
@@ -68,8 +68,8 @@ class CodeView @JvmOverloads constructor(
     private fun AbstractCodeAdapter<*>.checkHighlightAnimation(action: () -> Unit) {
         if (options.animateOnHighlight) {
             animate()
-                    .setDuration(Const.DefaultDelay * 2)
-                    .alpha(Const.Alpha.AlmostInvisible)
+                .setDuration(Const.DefaultDelay * 2)
+                .alpha(Const.Alpha.AlmostInvisible)
             delayed {
                 animate().alpha(Const.Alpha.Visible)
                 action()
@@ -115,8 +115,8 @@ class CodeView @JvmOverloads constructor(
      */
     fun updateOptions(options: Options) {
         adapter
-                ?.let { it.options = options }
-                ?: setOptions(options)
+            ?.let { it.options = options }
+            ?: setOptions(options)
 
         setupShadows(options.shadows)
     }
@@ -127,9 +127,11 @@ class CodeView @JvmOverloads constructor(
      * @param body Options mutator
      */
     fun updateOptions(body: Options.() -> Unit) =
-            optionsOrDefault
-                    .apply(body)
-                    .apply(::updateOptions)
+        optionsOrDefault.apply(body)
+            .apply {
+                updateOptions(this)
+            }
+
 
     // - Adapter
 
@@ -188,18 +190,18 @@ class CodeView @JvmOverloads constructor(
             this.language = language
         }
         (adapter ?: CodeWithNotesAdapter(context, options)
-                .apply(::setAdapter))
-                .updateCode(code)
+            .apply(::setAdapter))
+            .updateCode(code)
     }
 
     companion object {
 
         private fun AttributeSet.isAnimateOnStart(context: Context) =
-                context.theme.obtainStyledAttributes(this, R.styleable.CodeView, 0, 0).run {
-                    val isAnimate = getBoolean(R.styleable.CodeView_animateOnStart, false)
-                    recycle()
-                    isAnimate
-                }
+            context.theme.obtainStyledAttributes(this, R.styleable.CodeView, 0, 0).run {
+                val isAnimate = getBoolean(R.styleable.CodeView_animateOnStart, false)
+                recycle()
+                isAnimate
+            }
 
         private fun View.setSafeBackground(newBackground: Drawable) {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {

@@ -8,13 +8,13 @@
     <io.github.kbiakov.codeview.views.BidirectionalScrollView
         android:id="@+id/v_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:fillViewport="true">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_content"
+            android:id="@+id/rv_code_content"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             tools:listitem="@layout/item_code_line"/>
 
     </io.github.kbiakov.codeview.views.BidirectionalScrollView>

@@ -119,7 +119,7 @@ public class CombinePrefixPattern {
             + "|-"
             + "|[^-\\\\]"), charSet.substring(1, charSet.length() - 1), true);
     List<List<Integer>> ranges = new ArrayList<List<Integer>>();
-    boolean inverse = charsetParts[0] != null && charsetParts[0].equals("^");
+    boolean inverse = charsetParts[0] != null && "^".equals(charsetParts[0]);
 
     List<String> out = new ArrayList<String>(Arrays.asList(new String[]{"["}));
     if (inverse) {
@@ -217,7 +217,7 @@ public class CombinePrefixPattern {
     // mapping.
     for (int i = 0, groupIndex = 0; i < n; ++i) {
       String p = parts[i];
-      if (p.equals("(")) {
+      if ("(".equals(p)) {
         // groups are 1-indexed, so max group index is count of '('
         ++groupIndex;
       } else if ('\\' == p.charAt(0)) {
@@ -245,7 +245,7 @@ public class CombinePrefixPattern {
     }
     for (int i = 0, groupIndex = 0; i < n; ++i) {
       String p = parts[i];
-      if (p.equals("(")) {
+      if ("(".equals(p)) {
         ++groupIndex;
         if (capturedGroups.get(groupIndex) == null) {
           parts[i] = "(?:";
